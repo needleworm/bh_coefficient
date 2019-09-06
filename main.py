@@ -61,7 +61,9 @@ def main():
                         Y_size=FLAGS.num_Y,
                         loss="mean_squared_error",
                         optimizer="adam",
-                        metrics=["accuracy"])
+                        metrics=["accuracy"],
+                        reset=FLAGS.reset,
+                        logdir=logs_dir)
 
     #print(model.GRAPH.summary())
 
@@ -89,6 +91,8 @@ def main():
     test_loss, test_acc = model.GRAPH.evaluate(Test_X, Test_Y)
     print("** test loss is : " + str(test_loss))
     print("** test acc is : " + str(test_acc))
+
+    model.GRAPH.save(logs_dir + "/saved_model.h5")
 
 
 main()
