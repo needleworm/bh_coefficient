@@ -20,10 +20,10 @@ tf.flags.DEFINE_string('device', '/gpu:0', "device : /cpu:0 /gpu:0 [default : /g
 tf.flags.DEFINE_bool('reset', "True", "reset : True/False")  # Reset train history
 tf.flags.DEFINE_integer("num_X", "60", "SIZE. [Default : 60]") # size of input data
 tf.flags.DEFINE_integer("num_Y", "17", "SIZE. [Default : 17]") # size of label
-tf.flags.DEFINE_integer("training_batch_size", "128", "batch size for training. [default : 128]")
-tf.flags.DEFINE_integer("test_batch_size", "128", "batch size for validation. [default : 128]")
-tf.flags.DEFINE_integer("predict_batch_size", "128", "batch size for visualization. [default : 128]")
-tf.flags.DEFINE_integer("num_epochs", "12", "how many epochs?. [default : 12]")
+tf.flags.DEFINE_integer("training_batch_size", "512", "batch size for training. [default : 128]")
+tf.flags.DEFINE_integer("test_batch_size", "512", "batch size for validation. [default : 128]")
+tf.flags.DEFINE_integer("predict_batch_size", "512", "batch size for visualization. [default : 128]")
+tf.flags.DEFINE_integer("num_epochs", "20", "how many epochs?. [default : 12]")
 
 # Directory Setting
 logs_dir = "logs"

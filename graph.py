@@ -15,11 +15,13 @@ class FNN():
     def graph(self, reset, logdir):
         if reset:
             model = tf.keras.Sequential()
-            model.add(layers.Dense(64, activation="relu"))
+            model.add(layers.Dense(128, activation="relu"))
             model.add(layers.BatchNormalization())
-            model.add(layers.Dense(64, activation="relu"))
+            model.add(layers.Dense(128, activation="relu"))
             model.add(layers.BatchNormalization())
-            model.add(layers.Dense(64, activation="relu"))
+            model.add(layers.Dense(128, activation="relu"))
+            model.add(layers.BatchNormalization())
+            model.add(layers.Dense(128, activation="relu"))
             model.add(layers.BatchNormalization())
             model.add(layers.Dense(self.Y_size, activation="relu"))
             model.compile(optimizer=self.optimizer,
