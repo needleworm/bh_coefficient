@@ -22,10 +22,10 @@ tf.flags.DEFINE_string('device', '/gpu:0', "device : /cpu:0 /gpu:0 [default : /g
 tf.flags.DEFINE_bool('reset', "True", "reset : True/False")  # Reset train history
 tf.flags.DEFINE_integer("num_X", "60", "SIZE. [Default : 60]") # size of input data
 tf.flags.DEFINE_integer("num_Y", "16", "SIZE. [Default : 17]") # size of label
-tf.flags.DEFINE_integer("training_batch_size", "64", "batch size for training. [default : 128]")
-tf.flags.DEFINE_integer("test_batch_size", "64", "batch size for validation. [default : 128]")
-tf.flags.DEFINE_integer("predict_batch_size", "64", "batch size for visualization. [default : 128]")
-tf.flags.DEFINE_integer("num_epochs", "10", "how many epochs?. [default : 12]")
+tf.flags.DEFINE_integer("training_batch_size", "128", "batch size for training. [default : 128]")
+tf.flags.DEFINE_integer("test_batch_size", "128", "batch size for validation. [default : 128]")
+tf.flags.DEFINE_integer("predict_batch_size", "128", "batch size for visualization. [default : 128]")
+tf.flags.DEFINE_integer("num_epochs", "50", "how many epochs?. [default : 12]")
 
 # Directory Setting
 logs_dir = "logs"
@@ -61,6 +61,8 @@ def main():
         model = MODEL(X_size=FLAGS.num_X,
                         Y_size=FLAGS.num_Y,
                         loss="mean_squared_error",
+                        #loss="mean_absolute_error",
+                        #loss="mean_squared_logarithmic_error",
                         optimizer="adam",
                         metrics=["accuracy"],
                         reset=FLAGS.reset,
@@ -79,6 +81,7 @@ def main():
     if FLAGS.mode == "train":
         Train_X = np.load(training_x)
         Train_Y = np.load(training_y)
+
 
     # Training Part
     if FLAGS.mode == "train":
