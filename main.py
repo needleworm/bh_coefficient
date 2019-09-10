@@ -20,25 +20,25 @@ FLAGS = tf.flags.FLAGS
 tf.flags.DEFINE_string('mode', "train", "mode : train/ predict [default : train]")  # Mode
 tf.flags.DEFINE_string('device', '/gpu:0', "device : /cpu:0 /gpu:0 [default : /gpu:0]")  # Device
 tf.flags.DEFINE_bool('reset', "True", "reset : True/False")  # Reset train history
-tf.flags.DEFINE_integer("num_X", "60", "SIZE. [Default : 60]") # size of input data
-tf.flags.DEFINE_integer("num_Y", "16", "SIZE. [Default : 17]") # size of label
-tf.flags.DEFINE_integer("training_batch_size", "256", "batch size for training. [default : 128]")
-tf.flags.DEFINE_integer("test_batch_size", "256", "batch size for validation. [default : 128]")
-tf.flags.DEFINE_integer("predict_batch_size", "256", "batch size for visualization. [default : 128]")
+tf.flags.DEFINE_integer("num_X", "6", "SIZE. [Default : 60]") # size of input data
+tf.flags.DEFINE_integer("num_Y", "15", "SIZE. [Default : 17]") # size of label
+tf.flags.DEFINE_integer("training_batch_size", "2048", "batch size for training. [default : 128]")
+tf.flags.DEFINE_integer("test_batch_size", "2048", "batch size for validation. [default : 128]")
+tf.flags.DEFINE_integer("predict_batch_size", "2048", "batch size for visualization. [default : 128]")
 tf.flags.DEFINE_integer("num_epochs", "20", "how many epochs?. [default : 12]")
 
 # Directory Setting
-logs_dir = "logs2"
-test_x = "data/normalized_test_X.npy"
-test_y = "data/normalized_test_Y.npy"
-training_x = "data/normalized_train_X.npy"
-training_y = "data/normalized_train_Y.npy"
+logs_dir = "logs4"
+test_x = "data/Normalized_ISE_obs_test_X.npy"
+test_y = "data/Normalized_ISE_obs_test_Y.npy"
+training_x = "data/Normalized_ISE_obs_training_X.npy"
+training_y = "data/Normalized_ISE_obs_training_Y.npy"
 
 # Hyperparameters
 learning_rate = 1e-4
 
 # Define Model
-MODEL = graph.FNN3
+MODEL = graph.FNN5
 
 # Directory Reset
 if FLAGS.mode is "predict":
@@ -71,7 +71,8 @@ def main():
                         loss="mean_absolute_percentage_error",
                         #loss="mean_squared_logarithmic_error",
                         optimizer="adam",
-                        metrics=["mean_absolute_error"],
+                        #metrics=["mean_absolute_error"],
+                        metrics=[R2],
                         reset=FLAGS.reset,
                         logdir=logs_dir)
 
