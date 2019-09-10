@@ -22,13 +22,13 @@ tf.flags.DEFINE_string('device', '/gpu:0', "device : /cpu:0 /gpu:0 [default : /g
 tf.flags.DEFINE_bool('reset', "True", "reset : True/False")  # Reset train history
 tf.flags.DEFINE_integer("num_X", "60", "SIZE. [Default : 60]") # size of input data
 tf.flags.DEFINE_integer("num_Y", "16", "SIZE. [Default : 17]") # size of label
-tf.flags.DEFINE_integer("training_batch_size", "128", "batch size for training. [default : 128]")
-tf.flags.DEFINE_integer("test_batch_size", "128", "batch size for validation. [default : 128]")
-tf.flags.DEFINE_integer("predict_batch_size", "128", "batch size for visualization. [default : 128]")
-tf.flags.DEFINE_integer("num_epochs", "50", "how many epochs?. [default : 12]")
+tf.flags.DEFINE_integer("training_batch_size", "256", "batch size for training. [default : 128]")
+tf.flags.DEFINE_integer("test_batch_size", "256", "batch size for validation. [default : 128]")
+tf.flags.DEFINE_integer("predict_batch_size", "256", "batch size for visualization. [default : 128]")
+tf.flags.DEFINE_integer("num_epochs", "20", "how many epochs?. [default : 12]")
 
 # Directory Setting
-logs_dir = "logs"
+logs_dir = "logs2"
 test_x = "data/normalized_test_X.npy"
 test_y = "data/normalized_test_Y.npy"
 training_x = "data/normalized_train_X.npy"
@@ -53,6 +53,12 @@ if FLAGS.reset:
     os.mkdir(logs_dir + "/test")
 
 
+def R2(y_true, y_pred):
+    SS_res =  keras.backend.sum(keras.backend.square(y_true - y_pred))
+    SS_tot = keras.backend.sum(keras.backend.square(y_true - keras.backend.mean(y_true)))
+    return ( 1 - SS_res/(SS_tot + keras.backend.epsilon()) )
+
+
 # Training
 def main():
     # Graph part
@@ -60,11 +66,12 @@ def main():
     with tf.device(FLAGS.device):
         model = MODEL(X_size=FLAGS.num_X,
                         Y_size=FLAGS.num_Y,
-                        loss="mean_squared_error",
+                        #loss="mean_squared_error",
                         #loss="mean_absolute_error",
+                        loss="mean_absolute_percentage_error",
                         #loss="mean_squared_logarithmic_error",
                         optimizer="adam",
-                        metrics=["accuracy"],
+                        metrics=["mean_absolute_error"],
                         reset=FLAGS.reset,
                         logdir=logs_dir)
 
